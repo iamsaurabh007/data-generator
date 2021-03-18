@@ -5,8 +5,10 @@ from multiprocessing import Queue
 #from src.services.train import train_context
 #from src.services.get_corpus import corpus_generator, get_chunk
 from code import generator,create_image
-from config import  PROCESS,FILEPATH
+from config import  PROCESS,FILEPATH,OUTPATH
 import time
+import os
+
 
 train_queue = Queue() #queue.Queue()
 chuck_count = 0
@@ -23,8 +25,10 @@ def start_threads(thread_count):
 
 
 if __name__ == '__main__':
-
-    
+	pa=OUTPATH +'/out/imgs'
+	pb=	OUTPATH +'/out/json'
+    os.system('mkdir -p ' +pa)
+    os.system('mkdir -p ' +pb)
     para = generator(FILEPATH)
     start_threads(PROCESS)
             
