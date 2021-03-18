@@ -14,7 +14,7 @@ chuck_count = 0
 def train_chunk():
     while True:
         ls=(train_queue.get(block=True))
-        create_image(ls[0],ls[1],ls[2],ls[3],FILEPATH)
+        create_image(ls[0],ls[1],ls[2],ls[3],ls[4],FILEPATH)
 def start_threads(thread_count):
     threads = []
     for t in range(thread_count):
