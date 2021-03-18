@@ -1,2 +1,3 @@
-THREADS=4
-FILEPATH='/home/saurabhyadav007/data-generator'
+PROCESS=50
+FILEPATH='/home/ubuntu/data-generator'
+OUTPATH='/home/ubuntu/data/ocr'

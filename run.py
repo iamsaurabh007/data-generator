@@ -5,7 +5,7 @@ from multiprocessing import Queue
 #from src.services.train import train_context
 #from src.services.get_corpus import corpus_generator, get_chunk
 from code import generator,create_image
-from config import  THREADS,FILEPATH
+from config import  PROCESS,FILEPATH
 import time
 
 train_queue = Queue() #queue.Queue()
@@ -26,23 +26,23 @@ if __name__ == '__main__':
 
     
     para = generator(FILEPATH)
-    start_threads(THREADS)
+    start_threads(PROCESS)
             
     while True :
         p=False
-        while train_queue.qsize() < THREADS :
+        while train_queue.qsize() < PROCESS :
             try:
                 background,font,symbol,font_size,col = para.__next__()
                 ls=[background,font,symbol,font_size,col]
                 train_queue.put(ls)
-                time.sleep(.1)
+                #time.sleep(.1)
             except Exception as e:
                 p=True
                 break
-            time.sleep(.1)
+            #time.sleep(.1)
             #print('chunks in queue: {}'.format(train_queue.qsize()))
             
-        time.sleep(0.5)
+        time.sleep(0.05)
         if p:
             break
         
