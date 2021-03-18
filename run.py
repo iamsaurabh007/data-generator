@@ -51,7 +51,7 @@ if __name__ == '__main__':
             break
         
         
-    print('Image Generation finished for {}'.format(CORPUS_PATH))
+    print('Image Generation finished at {}'.format(OUTPATH))
     
 
 
