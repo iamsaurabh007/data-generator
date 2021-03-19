@@ -41,9 +41,10 @@ def generator(path):
 	font_pack=file_list(path+'/font_files')
 	font_colour=[(0,0,0),(20,20,20),(79,79,79)]
 	font_sizes=range(5,116,10)
-	symbols=list(string.printable[:94])
-	symbols.append(u"\u00A9")
-	symbols.append(u"\u2122")
+	#symbols=list(string.printable[:94])
+	#symbols.append(u"\u00A9")
+	#symbols.append(u"\u2122")
+	symbols=[' ']
 	for k,background in enumerate(bgs):
 		for font in font_pack:
 			for symbol in symbols:
