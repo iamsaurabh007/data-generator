@@ -40,7 +40,7 @@ if __name__ == '__main__':
                 ls=[background,font,symbol,font_size,col]
                 train_queue.put(ls)
                 #time.sleep(.1)
-            except Exception as e:
+            except StopIteration:
                 p=True
                 break
             #time.sleep(.1)
