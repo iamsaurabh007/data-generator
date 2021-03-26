@@ -16,13 +16,18 @@ def file_list(mypath):
 
 def create_image(background,font,symbol,font_size,col,path):
     image = Image.open(background)
+    if image.mode in ("RGBA", "P"):
+        image = image.convert("RGB")
+    image=image.resize((200,200))
     font_pil = ImageFont.truetype(font, font_size)
     ascent, descent = font_pil.getmetrics()   
     text_width = font_pil.getmask('A').getbbox()[2]
     text_height = ascent + descent+15
-    image=image.crop((2,2,20+text_width,20+text_height))
+    a=(200-text_width)//2
+    b=(200-text_height)//2
+    #image=image.crop((2,2,20+text_width,20+text_height))
     draw=ImageDraw.Draw(image)
-    draw.text((int(text_width/2)+8,int(ascent+3)),symbol,col,font=font_pil,anchor='ms')
+    draw.text((a,b),symbol,col,font=font_pil)
     image_id="img"+str(uuid.uuid4())
     im1=image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
     data={}
@@ -39,19 +44,22 @@ def create_image(background,font,symbol,font_size,col,path):
 def generator(path):
 	bgs=file_list(path+'/BG_PAPER')
 	font_pack=file_list(path+'/font_files')
-	font_colour=[(0,0,0),(20,20,20),(79,79,79)]
+	font_colour=[(0,0,0),(25,25,25),(65,65,65)]
 	font_sizes=range(5,116,10)
-	#symbols=list(string.printable[:94])
-	#symbols.append(u"\u00A9")
-	#symbols.append(u"\u2122")
-	symbols=[' ']
-	for k,background in enumerate(bgs):
-		for font in font_pack:
-			for symbol in symbols:
-				for font_size in font_sizes:
-					for col in font_colour:
+	#font_sizes=[15,55,115]   ###range(15,116,10)
+	symbols=list(string.printable[:94])
+	symbols.append(u"\u00A9")
+	symbols.append(u"\u2122")
+	symbol.append(" ")
+    #symbols=['A','3','S','@']
+
+	for k,font in enumerate(font_pack):
+		for symbol in symbols:
+			for font_size in font_sizes:
+				for col in font_colour:	
+					for background in bgs:	
 						yield background,font,symbol,font_size,col
-		print(k)
+        print("Percent Completed : ",((k+1)/len(font_pack))*100)
 
 
 
