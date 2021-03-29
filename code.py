@@ -18,16 +18,21 @@ def create_image(background,font,symbol,font_size,col,path):
     image = Image.open(background)
     if image.mode in ("RGBA", "P"):
         image = image.convert("RGB")
-    image=image.resize((200,200))
+    #image=image.resize((200,200))
     font_pil = ImageFont.truetype(font, font_size)
-    ascent, descent = font_pil.getmetrics()   
-    text_width = font_pil.getmask('A').getbbox()[2]
-    text_height = ascent + descent+5
-    a=(200-text_width)//2
-    b=(200-text_height)//2
+    ascent, descent = font_pil.getmetrics()  
+    a=font_pil.getmask(symbol).getbbox()   
+    text_width = a[2]
+    text_height = ascent+descent
+    text_width+=int(0.10*(text_width))
+    text_height+=int(0.10*(text_height))
+    image=image.resize((text_width+8,text_height))
+    a=text_width//2
+    b=ascent+int(0.05*(ascent))
     #image=image.crop((2,2,20+text_width,20+text_height))
     draw=ImageDraw.Draw(image)
-    draw.text((a,b),symbol,col,font=font_pil)
+    draw.text((4,b),symbol,col,font=font_pil,anchor="ls")
+    #image.thumbnail([100,100], Image.ANTIALIAS)
     image_id="img"+str(uuid.uuid4())
     im1=image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
     data={}
@@ -45,21 +50,27 @@ def generator(path):
     bgs=file_list(path+'/BG_PAPER')
     font_pack=file_list(path+'/font_files')
     font_colour=[(0,0,0),(25,25,25),(65,65,65)]
-    font_sizes=range(15,116,10)
-    #font_sizes=[15,55,115]   ###range(15,116,10)
+    #font_sizes=range(15,116,10)
+    font_sizes=[20,35,55,75,95,115]   ###range(15,116,10)
     symbols=list(string.printable[:94])
     symbols.append(u"\u00A9")
     symbols.append(u"\u2122")
     symbols.append(" ")
-    #symbols=['A','3','S','@']
+    #symbols=['A','g','I','@','`',"^"]
 
+    # for k,font in enumerate(font_pack):
+    #     for symbol in symbols:
+    #         for font_size in font_sizes:
+    #             for col in font_colour:
+    #                 for background in bgs:
+    #                     yield background,font,symbol,font_size,col
+    #     print("Percent Completed : ",((k+1)/len(font_pack))*100)
+        
     for k,font in enumerate(font_pack):
-        for symbol in symbols:
+        for background in bgs:
             for font_size in font_sizes:
                 for col in font_colour:
-                    for background in bgs:
+                    for symbol in symbols:
                         yield background,font,symbol,font_size,col
-        print("Percent Completed : ",((k+1)/len(font_pack))*100)
-        
-    
+        print("Percent Completed : ",((k+1)/len(font_pack))*100)  
 
