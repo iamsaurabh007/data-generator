@@ -1,4 +1,4 @@
-PROCESS=60
+PROCESS=58
 FILEPATH='/home/ubuntu/data-generator'
 OUTPATH='/home/ubuntu/data/ocr'
 #PROCESS=2
