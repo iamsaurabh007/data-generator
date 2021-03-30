@@ -37,7 +37,7 @@ def create_image(background,font,symbol,font_size,col,path):
     draw.text((4,b),symbol,col,font=font_pil,anchor="ls")
     #image.thumbnail([100,100], Image.ANTIALIAS)
     image_id="img"+str(uuid.uuid4())
-    im1=image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
+    im1=image.save(OUTPATH+"/chardata/imgs/"+image_id+".jpeg")
     data={}
     data['image']={
         'image_id':image_id,
@@ -46,7 +46,7 @@ def create_image(background,font,symbol,font_size,col,path):
         'font_style':font[font.rfind('/')+1:],
         'font_size':font_size,
         'font_color':col}
-    with open(OUTPATH+"/out/json/" +image_id +'.json', 'w') as f:
+    with open(OUTPATH+"/chardata/json/" +image_id +'.json', 'w') as f:
         json.dump(data, f)
 
 def generator(path):
@@ -54,7 +54,7 @@ def generator(path):
     font_pack=file_list(path+'/font_files')
     font_colour=[(0,0,0),(25,25,25),(65,65,65)]
     #font_sizes=range(15,116,10)
-    font_sizes=[20,35,55,75,95,115]   ###range(15,116,10)
+    font_sizes=[35,55,75,95,115]   ###range(15,116,10)
     symbols=list(string.printable[:94])
     symbols.append(u"\u00A9")
     symbols.append(u"\u2122")

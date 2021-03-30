@@ -25,8 +25,8 @@ def start_threads(thread_count):
 
 
 if __name__ == '__main__':
-    pa=OUTPATH +'/out/imgs'
-    pb=OUTPATH +'/out/json'
+    pa=OUTPATH +'/chardata/imgs'
+    pb=OUTPATH +'/chardata/json'
     os.system('mkdir -p ' +pa)
     os.system('mkdir -p ' +pb)
     para = generator(FILEPATH)
