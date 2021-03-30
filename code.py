@@ -37,16 +37,15 @@ def create_image(background,font,symbol,font_size,col,path):
     draw.text((4,b),symbol,col,font=font_pil,anchor="ls")
     #image.thumbnail([100,100], Image.ANTIALIAS)
     image_id="img"+str(uuid.uuid4())
-    im1=image.save(OUTPATH+"/chardata/imgs/"+image_id+".jpeg")
-    data={}
-    data['image']={
+    im1=image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
+    data={
         'image_id':image_id,
         'character':symbol,
         'background':background[background.rfind('/')+1:],
         'font_style':font[font.rfind('/')+1:],
         'font_size':font_size,
         'font_color':col}
-    with open(OUTPATH+"/chardata/json/" +image_id +'.json', 'w') as f:
+    with open(OUTPATH+"/out/json/" +image_id +'.json', 'w') as f:
         json.dump(data, f)
 
 def generator(path):
