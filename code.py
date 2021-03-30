@@ -22,7 +22,10 @@ def create_image(background,font,symbol,font_size,col,path):
     font_pil = ImageFont.truetype(font, font_size)
     ascent, descent = font_pil.getmetrics()  
     try:
-        a=font_pil.getmask(symbol).getbbox()[2]
+        if symbol==" ":
+            a=font_pil.getmask('-').getbbox()[2]
+        else:
+            a=font_pil.getmask(symbol).getbbox()[2]
     except TypeError:
         print("TYPEERROR handled due to",symbol)
         a=font_pil.getmask('-').getbbox()[2]   
