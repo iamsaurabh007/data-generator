@@ -21,13 +21,11 @@ def create_image(background,font,symbol,font_size,col,path):
     #image=image.resize((200,200))
     font_pil = ImageFont.truetype(font, font_size)
     ascent, descent = font_pil.getmetrics()  
-    if symbol == ' ':
-    	a=font_pil.getmask('-').getbbox()[2]
-    else:
-    	try:
-    	    a=font_pil.getmask(symbol).getbbox()[2]
-    	except TypeError:
-    	    print("ERROR due to",symbol)   
+    try:
+	a=font_pil.getmask(symbol).getbbox()[2]
+    except TypeError:
+ 	print("TYPEERROR handled due to",symbol)
+	a=font_pil.getmask('-').getbbox()[2]   
     text_width = a
     text_height = ascent+descent
     text_width+=int(0.10*(text_width))
