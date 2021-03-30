@@ -24,7 +24,10 @@ def create_image(background,font,symbol,font_size,col,path):
     if symbol == ' ':
     	a=font_pil.getmask('-').getbbox()[2]
     else:
-    	a=font_pil.getmask(symbol).getbbox()[2]   
+    	try:
+    	    a=font_pil.getmask(symbol).getbbox()[2]
+    	except TypeError:
+    	    print("ERROR due to",symbol)   
     text_width = a
     text_height = ascent+descent
     text_width+=int(0.10*(text_width))
