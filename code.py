@@ -7,6 +7,7 @@ import string
 import uuid
 import json
 from config import OUTPATH
+import config
 
 
 def file_list(mypath):
@@ -33,7 +34,7 @@ def create_image(background,font,symbol,font_size,col,path):
     text_height = ascent+descent
     text_width+=int(0.10*(text_width))
     text_height+=int(0.10*(text_height))
-    image=image.resize((text_width+8,text_height))
+    image=image.resize((text_width+8,text_height),Image.ANTIALIAS)
     a=text_width//2
     b=ascent+int(0.05*(ascent))
     #image=image.crop((2,2,20+text_width,20+text_height))
@@ -41,7 +42,7 @@ def create_image(background,font,symbol,font_size,col,path):
     draw.text((4,b),symbol,col,font=font_pil,anchor="ls")
     #image.thumbnail([100,100], Image.ANTIALIAS)
     image_id="img"+str(uuid.uuid4())
-    im1=image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
+    image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
     data={
         'image_id':image_id,
         'character':symbol,
@@ -55,13 +56,16 @@ def create_image(background,font,symbol,font_size,col,path):
 def generator(path):
     bgs=file_list(path+'/BG_PAPER')
     font_pack=file_list(path+'/font_files')
-    font_colour=[(0,0,0),(25,25,25),(65,65,65)]
+    #font_colour=[(0,0,0),(25,25,25),(65,65,65)]
     #font_sizes=range(15,116,10)
-    font_sizes=[35,55,75,95,115]   ###range(15,116,10)
-    symbols=list(string.printable[:94])
-    symbols.append(u"\u00A9")
-    symbols.append(u"\u2122")
-    symbols.append(" ")
+    #font_sizes=[35,55,75,95,115]   ###range(15,116,10)
+    #symbols=list(string.printable[:94])
+    #symbols.append(u"\u00A9")
+    #symbols.append(u"\u2122")
+    #symbols.append(" ")
+    symbols=config.symbols
+    font_colour=config.font_colour
+    font_sizes=config.font_sizes
     #symbols=['A','g','I','@','`',"^"]
 
     # for k,font in enumerate(font_pack):
@@ -72,11 +76,12 @@ def generator(path):
     #                     yield background,font,symbol,font_size,col
     #     print("Percent Completed : ",((k+1)/len(font_pack))*100)
         
-    for k,font in enumerate(font_pack):
-        for background in bgs:
-            for font_size in font_sizes:
-                for col in font_colour:
+  
+    for col in font_colour:
+        for font_size in font_sizes:
+            for background in bgs:
+                for font in font_pack:
                     for symbol in symbols:
                         yield background,font,symbol,font_size,col
-        print("Percent Completed : ",((k+1)/len(font_pack))*100)  
+        #print("Percent Completed : ",((k+1)/len(font_pack))*100)  
 
