@@ -29,7 +29,7 @@ def create_image(background,font,symbol,font_size,col,path):
             a=font_pil.getmask(symbol).getbbox()[2]
     except TypeError:
         print("TYPEERROR handled due to",symbol)
-        a=font_pil.getmask('M').getbbox()[2]   
+        return   
     text_width = a
     text_height = ascent+descent
     text_width+=int(0.10*(text_width))
@@ -39,7 +39,7 @@ def create_image(background,font,symbol,font_size,col,path):
     b=ascent+int(0.05*(ascent))
     #image=image.crop((2,2,20+text_width,20+text_height))
     draw=ImageDraw.Draw(image)
-    draw.text((4,b),symbol,col,font=font_pil,anchor="ls")
+    draw.text((a,b//2),symbol,col,font=font_pil,anchor="mm")
     #image.thumbnail([100,100], Image.ANTIALIAS)
     image_id="img"+str(uuid.uuid4())
     image.save(OUTPATH+"/out/imgs/"+image_id+".jpeg")
@@ -63,7 +63,7 @@ def generator(path):
     #symbols.append(u"\u00A9")
     #symbols.append(u"\u2122")
     #symbols.append(" ")
-    symbols=config.symbols
+    symbols=config.lines
     font_colour=config.font_colour
     font_sizes=config.font_sizes
     #symbols=['A','g','I','@','`',"^"]
