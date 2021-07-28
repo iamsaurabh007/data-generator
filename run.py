@@ -5,7 +5,7 @@ from multiprocessing import Queue
 #from src.services.train import train_context
 #from src.services.get_corpus import corpus_generator, get_chunk
 from code import generator,create_image
-from config import  PROCESS,FILEPATH,OUTPATH
+from config import  PROCESS,OUTPATH
 import time
 import os
 
@@ -16,7 +16,7 @@ chuck_count = 0
 def train_chunk():
     while True:
         ls=(train_queue.get(block=True))
-        create_image(ls[0],ls[1],ls[2],ls[3],ls[4],FILEPATH)
+        create_image(ls[0],ls[1],ls[2],ls[3],ls[4],OUTPATH)
 def start_threads(thread_count):
     threads = []
     for t in range(thread_count):
@@ -25,11 +25,9 @@ def start_threads(thread_count):
 
 
 if __name__ == '__main__':
-    pa=OUTPATH +'/out/imgs'
-    pb=OUTPATH +'/out/json'
-    os.system('mkdir -p ' +pa)
-    os.system('mkdir -p ' +pb)
-    para = generator(FILEPATH)
+
+    os.system('mkdir -p ' +OUTPATH)
+    para = generator()
     start_threads(PROCESS)
             
     while True :
